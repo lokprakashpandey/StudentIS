@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+use Auth;
+use App\Program;
+use App\Semester;
+use App\Section;
+use App\Profile;
+use App\Picture;
+
+class HomeController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $user = User::where('id',Auth::user()->id)->first();
+
+        return view('home')->with('user',$user);
+    } 
+
+    public function add(Request $request){
+
+        $id = $request['id'];
+        $programs = Program::all();
+        $semesters = Semester::all();
+        $sections = Section::all();
+        return view('add')->with('id',$id)->with('programs',$programs)->with('semesters',$semesters)->with('sections',$sections);
+    }
+
+    public function store(Request $request){
+
+        $profile = new Profile;
+        $profile->fullname = $request['fullname'];
+        $profile->gender = $request['gender']; 
+        $profile->fk_userid = $request['id'];
+        $profile->fk_programid = $request['programid'];
+        $profile->fk_semesterid = $request['semesterid'];
+        $profile->fk_sectionid = $request['sectionid'];
+        $profile->ip= $request->ip();
+        $profile->save();
+
+        $picture = new Picture;
+
+        $name = time().$request->file('pic')->getClientOriginalName();
+        $dest = base_path()."/public/uploads";
+        $request->file('pic')->move($dest,$name);
+        
+        $picture->path = $name;
+        $picture->fk_userid = $request['id'];
+        $picture->save();
+
+
+        $programs = Program::all();
+        $semesters = Semester::all();
+        $sections = Section::all();
+        return view('edit')->with('id',$request['id'])->with('profile',$profile)->with('picture',$picture)->with('programs',$programs)->with('semesters',$semesters)->with('sections',$sections);
+ 
+    }
+
+    public function edit(Request $request) {
+        
+        return view('edit')->with('id',$request['id']);        
+    }
+
+    public function update(Request $request){
+
+        
+    }
+
+}
