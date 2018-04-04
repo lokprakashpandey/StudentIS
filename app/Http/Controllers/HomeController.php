@@ -75,8 +75,17 @@ class HomeController extends Controller
     }
 
     public function edit(Request $request) {
-        
-        return view('edit')->with('id',$request['id']);        
+
+        $id = $request['id'];
+
+        $profile = Profile::where('fk_userid',$id)->first();
+        $picture = Picture::where('fk_userid',$id)->first();
+
+        $programs = Program::all();
+        $semesters = Semester::all();
+        $sections = Section::all();
+
+        return view('edit')->with('id',$request['id'])->with('profile',$profile)->with('picture',$picture)->with('programs',$programs)->with('semesters',$semesters)->with('sections',$sections);        
     }
 
     public function update(Request $request){
