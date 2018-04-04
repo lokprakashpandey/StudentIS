@@ -79,6 +79,7 @@ class HomeController extends Controller
         $id = $request['id'];
 
         $profile = Profile::where('fk_userid',$id)->first();
+        //get the first profile object where fk_userid matches id
         $picture = Picture::where('fk_userid',$id)->first();
 
         $programs = Program::all();
@@ -89,6 +90,32 @@ class HomeController extends Controller
     }
 
     public function update(Request $request){
+
+        //request ma id ayeko chha
+
+        $id = $request['id'];
+
+        $profile = Profile::where('fk_userid',$id)->first();
+        $profile->fullname = $request['fullname'];
+        $profile->gender = $request['gender'];
+
+        $profile->fk_programid = $request['programid'];
+        $profile->fk_semesterid = $request['semesterid'];
+        $profile->fk_sectionid = $request['sectionid'];
+        $profile->ip = $request->ip();
+        $profile->save();
+                
+        if ($request['pic']) {
+            $picture = Picture::where('fk_userid',$id)->first();
+            $filepath = base_path()."/public/uploads/".$picture->path;
+            is_file($filepath)? file_exists($filepath)? unlink($filepath): " ": " ";
+            
+            $name = time().$request->file('pic')->getClientOriginalName();
+            $dest = base_path()."/public/uploads";
+            $request->file('pic')->move($dest,$name);
+            $picture->path = $name;
+            $picture->save();
+        }
 
         
     }
