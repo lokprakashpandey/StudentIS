@@ -1,4 +1,4 @@
-{!!Form::open(array('url'=>'update','method'=>'post','enctype'=>'multipart/form-data'))!!}
+{!!Form:  :open(array('url'=>'update','method'=>'post','enctype'=>'multipart/form-data'))!!}
 
         <label>Full Name:</label>
             <input name="fullname" type="text" value="{{$profile->fullname}}" />
@@ -48,10 +48,12 @@
             <br/>
 
 
-            <img src="{{ URL::asset('uploads/'.$picture->path) }}">
+            <img src="{{ URL::asset('uploads/'.$picture->path) }}" height="100" width="100">
+            <br/>
             <label>Update picture:</label>
                 <input type="file" name="pic"/>
                 <br/>
             <input type="hidden" name="id" value="{{$id}}">
-        <button>Update</button> 
+        <button>Update</button>
+        <button>It's fine</button>
     {!!Form::close()!!}
