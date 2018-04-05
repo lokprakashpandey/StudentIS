@@ -16,22 +16,30 @@
 
                 Hi, {{$user->name}}.
 
-
                 <br/><br/>
 
                 What do you want to do?
 
                 <br/><br/>
-                {!!Form::open(array('url'=>'add','method'=>'post'))!!}
-                    <input type="hidden" name="id" value="{{$user->id}}">
-                    <button>Add Info</button>
-                {!!Form::close()!!}
 
-                {!!Form::open(array('url'=>'edit','method'=>'post'))!!}
-                    <input type="hidden" name="id" value="{{$user->id}}">
-                    <button>Edit Info</button>
-                {!!Form::close()!!}
+                    @if(is_null($profile))
+                        {!!Form::open(array('url'=>'add','method'=>'post'))!!}
+                            <input type="hidden" name="id" value="{{$user->id}}">
+                            <button>Add Info</button>
+                        {!!Form::close()!!}
 
+                        {!!Form::open(array('url'=>'edit','method'=>'post'))!!}
+                            <input type="hidden" name="id" value="{{$user->id}}">
+                            <button>Edit Info</button>
+                        {!!Form::close()!!}
+
+                    @else
+
+                        {!!Form::open(array('url'=>'edit','method'=>'post'))!!}
+                            <input type="hidden" name="id" value="{{$user->id}}">
+                            <button>Edit Info</button>
+                        {!!Form::close()!!}
+                    @endif
                     </div>
                 </div>
             </div>

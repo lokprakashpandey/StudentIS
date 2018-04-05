@@ -1,4 +1,4 @@
-{!!Form:  :open(array('url'=>'update','method'=>'post','enctype'=>'multipart/form-data'))!!}
+{!!Form::open(array('url'=>'update','method'=>'post','enctype'=>'multipart/form-data'))!!}
 
         <label>Full Name:</label>
             <input name="fullname" type="text" value="{{$profile->fullname}}" />
@@ -14,7 +14,7 @@
 
             <br/>
         <label>Program</label>
-            <select name="programid"> 
+            <select name="programid">
                 @foreach($programs as $program)
                 	@if($program->id == $profile->fk_programid)
                 		<option value="{{$program->id}}" selected="selected">{{$program->programname}}</option>
@@ -47,7 +47,6 @@
             </select>
             <br/>
 
-
             <img src="{{ URL::asset('uploads/'.$picture->path) }}" height="100" width="100">
             <br/>
             <label>Update picture:</label>
@@ -55,5 +54,5 @@
                 <br/>
             <input type="hidden" name="id" value="{{$id}}">
         <button>Update</button>
-        <button>It's fine</button>
     {!!Form::close()!!}
+    <button onclick="location.href='{{url('home')}}'">It's fine</button>
