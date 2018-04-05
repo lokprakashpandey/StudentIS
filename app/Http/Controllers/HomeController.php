@@ -32,7 +32,9 @@ class HomeController extends Controller
     {
         $user = User::where('id',Auth::user()->id)->first();
 
-        return view('home')->with('user',$user);
+        $profile = Profile::where('fk_userid',$user->id)->first();
+
+        return view('home')->with('user',$user)->with('profile',$profile);
     } 
 
     public function add(Request $request){
@@ -86,7 +88,7 @@ class HomeController extends Controller
         $semesters = Semester::all();
         $sections = Section::all();
 
-        return view('edit')->with('id',$request['id'])->with('profile',$profile)->with('picture',$picture)->with('programs',$programs)->with('semesters',$semesters)->with('sections',$sections);        
+        return view('edit')->with('id',$id)->with('profile',$profile)->with('picture',$picture)->with('programs',$programs)->with('semesters',$semesters)->with('sections',$sections);        
     }
 
     public function update(Request $request){
@@ -117,7 +119,10 @@ class HomeController extends Controller
             $picture->save();
         }
 
-        
+        $user = User::find($id);
+
+        \Session::flash('status','! Updation Successful !');
+       return view('home')->with('user',$user); 
     }
 
 }
