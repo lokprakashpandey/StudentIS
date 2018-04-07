@@ -28,14 +28,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
-        $user = User::where('id',Auth::user()->id)->first();
+            $user = User::where('id',Auth::user()->id)->first();
 
-        $profile = Profile::where('fk_userid',$user->id)->first();
+            if ($user->name === "admin") {
+                
+                return view('master/home'); 
+                //Redirects into Admin Route
+                }            
+            
+            else {
+                $profile = Profile::where('fk_userid',$user->id)->first();
 
-        return view('home')->with('user',$user)->with('profile',$profile);
-    } 
+                return view('home')->with('user',$user)->with('profile',$profile);
+            }
+    }
 
     public function add(Request $request){
 
