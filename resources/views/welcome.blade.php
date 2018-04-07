@@ -79,9 +79,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Welcome to Laravel
+                   Space for carousel
                 </div>
-
             </div>
         </div>
     </body>
