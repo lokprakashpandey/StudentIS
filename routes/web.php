@@ -22,3 +22,8 @@ Route::post('/add','HomeController@add');
 Route::post('/store','HomeController@store');
 Route::post('/edit','HomeController@edit');
 Route::post('/update','HomeController@update');
+
+Route::get('/master','AdminController@index');
+Route::get('/masterlogout','AdminController@loggedout');
+Route::post('/addStudent','AdminController@store');
+Route::post('listStudent','AdminController@list');
