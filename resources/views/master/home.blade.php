@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form class="form-horizontal" method="post" action="{{url('addStudent')}}" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
+                                            {!! csrf_field() !!}
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3">Full Name :</label>
                                                 <div class="col-sm-9">
@@ -175,7 +175,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="col-xs-9 text-left">
                         <form class="form-horizontal" method="post" action="{{url('listStudent')}}">
-                            {{ csrf_field() }}
+                            {!! csrf_field() !!}
                             <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-table fa-5x"></i> List Students</button>
                         </form>
                     </div>
