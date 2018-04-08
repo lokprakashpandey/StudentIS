@@ -131,7 +131,7 @@ class HomeController extends Controller
         $user = User::find($id);
 
         \Session::flash('status','! Updation Successful !');
-       return view('home')->with('user',$user); 
+       return view('home')->with('user',$user)->with('profile',$profile); 
     }
 
 }

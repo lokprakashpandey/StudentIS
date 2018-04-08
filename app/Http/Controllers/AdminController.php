@@ -7,6 +7,9 @@ use App\User;
 use Auth;
 use App\Profile;
 use App\Picture;
+use App\Program;
+use App\Semester;
+use App\Section;
 
 class AdminController extends Controller
 {
@@ -111,7 +114,15 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::where('id',$id)->first();
+        $profile = Profile::where('fk_userid',$id)->first();
+        $picture = Picture::where('fk_userid',$id)->first();
+
+        $programs = Program::all();
+        $semesters = Semester::all();
+        $sections = Section::all();
+        
+        return view('master/edit')->with('user',$user)->with('profile',$profile)->with('picture',$picture)->with('programs',$programs)->with('semesters',$semesters)->with('sections',$sections);
     }
 
     /**
@@ -123,7 +134,37 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::where('id',$id)->first();
+        $user->name = $request['username'];
+        $user->email = $request['email'];
+        $user->password = bcrypt($request['password']);
+        $user->save();
+        
+        $profile = Profile::where('fk_userid',$id)->first();
+        $profile->fullname = $request['fullname'];
+        $profile->gender = $request['gender'];
+
+        $profile->fk_programid = $request['programid'];
+        $profile->fk_semesterid = $request['semesterid'];
+        $profile->fk_sectionid = $request['sectionid'];
+        $profile->ip = $request->ip();
+        $profile->save();
+                
+        if ($request['pic']) {
+            $picture = Picture::where('fk_userid',$id)->first();
+            $filepath = base_path()."/public/uploads/".$picture->path;
+            is_file($filepath)? file_exists($filepath)? unlink($filepath): " ": " ";
+            
+            $name = time().$request->file('pic')->getClientOriginalName();
+            $dest = base_path()."/public/uploads";
+            $request->file('pic')->move($dest,$name);
+            $picture->path = $name;
+            $picture->save();
+        }
+
+        
+        \Session::flash('status','! Updation Successful !');
+       return redirect('listStudent');
     }
 
     /**
@@ -134,6 +175,16 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $picture = Picture::where('fk_userid',$id)->first();
+        $user->delete(); //all related info will be deleted cascadingly
+
+        //to delete associated picture if it exists
+        if(!is_null($picture)) {
+        $filepath = base_path()."/public/uploads/".$picture->path;
+        unlink($filepath);
+        }
+        \Session::flash('status','! Deletion Successful !');
+        return redirect('listStudent');
     }
 }
