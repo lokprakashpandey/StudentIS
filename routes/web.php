@@ -26,4 +26,13 @@ Route::post('/update','HomeController@update');
 Route::get('/master','AdminController@index');
 Route::get('/masterlogout','AdminController@loggedout');
 Route::post('/addStudent','AdminController@store');
-Route::post('listStudent','AdminController@list');
+
+Route::post('/listStudent','AdminController@list');
+Route::get('/listStudent','AdminController@list');
+
+Route::get('/editStudent/{id}','AdminController@edit');
+
+Route::get('/updateStudent/{id}','AdminController@update');
+Route::post('/updateStudent/{id}','AdminController@update');
+
+Route::get('/deleteStudent/{id}','AdminController@destroy');
