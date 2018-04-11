@@ -58,7 +58,7 @@
             </div>
             
             <div class="row">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-4">
                     <div class="col-xs-9 text-left">
                         <!-- Trigger the modal with a button -->
                             <button class="btn btn-default btn-lg" type="button" data-toggle="modal" data-target="#addModal"><i class="fa fa-edit fa-5x"></i> Add Student</button>
@@ -172,7 +172,7 @@
                               </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-4">
                     <div class="col-xs-9 text-left">
                         <form class="form-horizontal" method="post" action="{{url('listStudent')}}">
                             {!! csrf_field() !!}
@@ -180,12 +180,106 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <!-- /.row -->
-        </div>
-        
-    </div>
-    <!-- /#wrapper -->
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="col-xs-9 text-left">
+                        <button class="btn btn-default btn-lg" type="button" data-toggle="modal" data-target="#search"><i class="fa fa-search fa-5x"></i> Search</button>
+
+                        <div class="modal fade" id="search" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 class="modal-title">Search</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" method="post" action="{{url('countorlist')}}">
+                                            {!! csrf_field() !!}
+                                            <div class="form-group">
+                                               <label class="control-label col-sm-2">Find the </label>
+                                               <div class="col-sm-4">
+                                                  <input type="radio" name="choice" value="number" onclick="myFunction1()"> number
+                                                  <input type="radio" name="choice" value="name" onclick="myFunction2()"> name of
+                                               </div>
+                                               <div class="col-sm-3">
+                                                <select class="form-control" name="gender">
+                                                    <option value="M">Male</option>
+                                                    <option value="F">Female</option>
+                                                    <option value="A">All</option>
+                                                  </select>
+                                               </div>
+                                               <label class="control-label col-sm-3"> students in</label>
+                                            </div>
+
+                                            <div class="form-group">
+                                               <label class="control-label col-sm-3">Program :</label>
+                                               <div class="col-sm-9">
+                                                  <select class="form-control" name="programid">
+                                                    <option value="1">BIT</option>
+                                                    <option value="2">BSc CSIT</option>
+                                                    <option value="3">All</option>
+                                                  </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                               <label class="control-label col-sm-3">Semester :</label>
+                                               <div class="col-sm-9">
+                                                  <select class="form-control" name="semesterid">
+                                                    <option value="1">Semester I</option>
+                                                    <option value="2">Semester II</option>
+                                                    <option value="3">Semester III</option>
+                                                    <option value="4">Semester IV</option>
+                                                    <option value="5">Semester V</option>
+                                                    <option value="6">Semester VI</option>
+                                                    <option value="7">Semester VII</option>
+                                                    <option value="8">Semester VIII</option>
+                                                    <option value="9">All</option>
+                                                  </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                               <label class="control-label col-sm-3">Section :</label>
+                                               <div class="col-sm-9">
+                                                  <select class="form-control" name="sectionid">
+                                                    <option value="1">Section A</option>
+                                                    <option value="2">Section B</option>
+                                                    <option value="3">All</option>
+                                                  </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group"> 
+                                                <div class="col-sm-offset-3 col-sm-9">
+                                                  <button id="nameornumber" class="btn btn-default" type="submit">Count</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- nav pachhi ko -->
+    </div><!-- /#wrapper -->
+
+    <script>
+      function myFunction1() {
+          document.getElementById("nameornumber").innerHTML = "Count";
+      }
+
+      function myFunction2() {
+          document.getElementById("nameornumber").innerHTML = "List";
+      }
+
+    </script>
 
     <!-- jQuery -->
     <script src="../public/admin/vendor/jquery/jquery.min.js"></script>
