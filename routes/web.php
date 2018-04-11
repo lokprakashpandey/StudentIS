@@ -36,3 +36,5 @@ Route::get('/updateStudent/{id}','AdminController@update');
 Route::post('/updateStudent/{id}','AdminController@update');
 
 Route::get('/deleteStudent/{id}','AdminController@destroy');
+
+Route::post('/countorlist','SearchController@countorlist');
