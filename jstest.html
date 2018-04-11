@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<input type="radio" name="choice" value="number" onclick="myFunction1()">number
+<input type="radio" name="choice" value="name" onclick="myFunction2()">name
+
+
+<script>
+	function myFunction1() {
+	    document.getElementById("nameornumber").innerHTML = "Count";
+	}
+
+	function myFunction2() {
+	    document.getElementById("nameornumber").innerHTML = "List";
+	}
+
+</script>
+
+	<button id="nameornumber">Change</button>
+</body>
+</html>
