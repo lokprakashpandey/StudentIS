@@ -8,8 +8,11 @@ use App\Profile;
 class SearchController extends Controller
 {
     
-    public function count(Request $request)
+    public function countorlist(Request $request)
     {
+
+        $choice = $request['choice'];
+
         $gender = $request['gender'];
         $programid = $request['programid'];
         $semesterid = $request['semesterid'];
@@ -73,30 +76,37 @@ class SearchController extends Controller
                          );            
         }
 
-        $result = $builder->count();
-
-         // echo $builder->toSql();
-         // exit();
         
 
-        //one way without all option
-        // $result = $builder->where('gender', '=', $gender)
-        // 		->where('fk_programid', '=', $programid)
-        // 		->where('fk_semesterid', '=', $semesterid)
-        // 		->where('fk_sectionid', '=', $sectionid)
-        // 		->count();
+        if ($choice == "number") {
+            $result = $builder->count();
+            \Session::flash('status','Records found : '.$result);
+            return redirect('listStudent');    
+            // echo $builder->toSql();
+            // exit();
+            
+
+            //one way without all option
+            // $result = $builder->where('gender', '=', $gender)
+            //      ->where('fk_programid', '=', $programid)
+            //      ->where('fk_semesterid', '=', $semesterid)
+            //      ->where('fk_sectionid', '=', $sectionid)
+            //      ->count();
 
 
-        //other way without all option
-        // $result = \DB::table('profiles')
-        // 		->where('gender', '=', $gender)
-        // 		->where('fk_programid', '=', $programid)
-        // 		->where('fk_semesterid', '=', $semesterid)
-        // 		->where('fk_sectionid', '=', $sectionid)
-        // 		->count();
-
-        \Session::flash('status','Records found : '.$result);
-       return redirect('listStudent'); 
+            //other way without all option
+            // $result = \DB::table('profiles')
+            //      ->where('gender', '=', $gender)
+            //      ->where('fk_programid', '=', $programid)
+            //      ->where('fk_semesterid', '=', $semesterid)
+            //      ->where('fk_sectionid', '=', $sectionid)
+            //      ->count();
+        }
+        else {
+            $result = $builder->get();
+            \Session::flash('status','Matched Records');
+            return view('master/display')->with('result',$result);
+        }
 
     }
 }
